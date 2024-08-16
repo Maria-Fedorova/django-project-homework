@@ -27,6 +27,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField(verbose_name="цена за товар")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, verbose_name="Дата изменения")
+    manufactured_at = models.DateField(auto_now=True, verbose_name="Дата производства продукта")
     slug = models.CharField(max_length=150, **NULLABLE, verbose_name="URL")
 
     def __str__(self):
