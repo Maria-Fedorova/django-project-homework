@@ -1,0 +1,112 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Молочка",
+      "description": "Молочные продукты",
+      "photo": "",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Фрукты",
+      "description": "",
+      "photo": "",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Овощи",
+      "description": null,
+      "photo": "",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Электротовары",
+      "description": null,
+      "photo": "",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Молоко",
+      "description": "Из-под коровки",
+      "photo": "",
+      "category": 1,
+      "price": 100,
+      "created_at": "2024-08-16",
+      "updated_at": "2024-08-16",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Сыворотка",
+      "description": "Тоже молочка",
+      "photo": "",
+      "category": 1,
+      "price": 200,
+      "created_at": "2024-08-16",
+      "updated_at": "2024-08-16",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Ряженка",
+      "description": "Тоже молочка",
+      "photo": "",
+      "category": 1,
+      "price": 300,
+      "created_at": "2024-08-16",
+      "updated_at": "2024-08-16",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+      "name": "Яблоко",
+      "description": "Ф",
+      "photo": "",
+      "category": 2,
+      "price": 20,
+      "created_at": "2024-08-16",
+      "updated_at": "2024-08-16",
+      "slug": null
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 9,
+    "fields": {
+      "name": "Груша",
+      "description": "тоже фрукт",
+      "photo": "",
+      "category": 2,
+      "price": 400,
+      "created_at": "2024-08-16",
+      "updated_at": "2024-08-16",
+      "slug": null
+    }
+  }
+]
