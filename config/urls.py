@@ -18,11 +18,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
-from django.conf import global_settings
+
+from config import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("catalog.urls")),
+    path("", include("catalog.urls", namespace="catalog")),
     path("/contacts", include("catalog.urls")),
     # path('', include('catalog.urls'), namespace='catalog')
-]  # + static(global_settings.MEDIA_URL, document_root=global_settings.MEDIA_ROOT)
+]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
