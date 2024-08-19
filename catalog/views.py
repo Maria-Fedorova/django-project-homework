@@ -20,6 +20,7 @@ def contacts(request):
 def product_list(request):
     products = Product.objects.all()
     context = {"products": products}
+    #print(dir(Product()))
     return render(request, "product_list.html", context)
 
 
