@@ -28,6 +28,7 @@ class Product(models.Model):
         verbose_name="категория",
     )
     price = models.PositiveIntegerField(verbose_name="цена за товар")
+    views_counter = models.PositiveIntegerField(default=0, verbose_name="количество просмотров", help_text="Укажите количество просмотров продукта")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, verbose_name="Дата изменения")
     slug = models.CharField(max_length=150, **NULLABLE, verbose_name="URL")
@@ -42,3 +43,19 @@ class Product(models.Model):
     class Meta:
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
+
+class Blog(models.Model):
+    title = models.CharField(max_length=150, verbose_name='название статьи')
+    slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL')
+    description = models.TextField(verbose_name='описание')
+    photo = models.ImageField(upload_to='blog_photo/', **NULLABLE, verbose_name='фото')
+    created_at = models.DateField(auto_now_add=True, verbose_name='дата создания')
+    publication_attribute = models.BooleanField(default=True, verbose_name='опубликовано')
+    views_counter = models.PositiveIntegerField(default=0, verbose_name='количество просмотров')
+
+    def str(self):
+        return f'{self.title} {self.description}'
+
+    class Meta:
+        verbose_name = 'статья'
+        verbose_name_plural = 'статьи'
