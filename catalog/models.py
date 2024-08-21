@@ -48,9 +48,9 @@ class Blog(models.Model):
     title = models.CharField(max_length=150, verbose_name='название статьи')
     slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL')
     description = models.TextField(verbose_name='описание')
-    photo = models.ImageField(upload_to='blog_photo/', **NULLABLE, verbose_name='фото')
+    photo = models.ImageField(upload_to='blog_photo/%Y/%m/%d/', **NULLABLE, verbose_name='фото')
     created_at = models.DateField(auto_now_add=True, verbose_name='дата создания')
-    publication_attribute = models.BooleanField(default=True, verbose_name='опубликовано')
+    is_published = models.BooleanField(default=True, verbose_name='опубликовано')
     views_counter = models.PositiveIntegerField(default=0, verbose_name='количество просмотров')
 
     def str(self):

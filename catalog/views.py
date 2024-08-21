@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+# from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
@@ -9,15 +10,16 @@ from catalog.models import Product, Blog
 # Create your views here.
 
 
-def home(request):
-    return render(request, "home.html")
+# def home(request):
+#     return render(request, "home.html")
 
 
 # def contacts(request):
 #     return render(request, "contacts.html")
 
-class ContactsPageView(TemplateView):
-    template_name = "contacts.html"
+class ContactsView(TemplateView):
+    """Контроллер просмотра контактов"""
+    template_name = 'catalog/contacts.html'
 
 
 class ProductListView(ListView):
@@ -74,7 +76,7 @@ class BlogDetailView(DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object(queryset)
-        obj.views_count += 1
+        obj.views_counter += 1
         obj.save()
         return obj
 
@@ -99,3 +101,21 @@ class BlogUpdateView(UpdateView):
 class BlogDeleteView(DeleteView):
     model = Blog
     success_url = reverse_lazy('catalog:blog_list')
+
+def publishing_action(request, slug):
+    blog_item = get_object_or_404(Blog, slug=slug)
+    if blog_item.is_published:
+        blog_item.is_published = False
+    else:
+        blog_item.is_published = True
+
+        blog_item.save()
+
+        return redirect(reverse('catalog:blog_list'))
+
+    # if request.method == 'POST':
+    #     blog.is_published = not blog.is_published
+    #     blog.save()
+    #     return redirect('catalog:blog_detail', slug=blog.slug)
+    # else:
+    #     return redirect('catalog:blog_detail', slug=blog.slug)
