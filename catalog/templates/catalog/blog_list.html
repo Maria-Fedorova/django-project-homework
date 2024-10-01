@@ -23,8 +23,6 @@
                             </div>
                             {% if object.is_published %}
                             <a class="btn btn-primary" href="{% url 'catalog:publishing_action' object.slug %}" role="button">Снять с публикации</a>
-                            {% else %}
-                            <a class="btn btn-primary" href="{% url 'catalog:publishing_action' object.slug %}" role="button">Опубликовать</a>
                             {% endif %}
                         </div>
                     </div>

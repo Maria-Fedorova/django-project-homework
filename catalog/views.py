@@ -1,5 +1,5 @@
 # from django.shortcuts import render, get_object_or_404
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
@@ -55,6 +55,11 @@ class ProductDeleteView(DeleteView):
 class BlogListView(ListView):
     model = Blog
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
 
 class BlogCreateView(CreateView):
     model = Blog
@@ -102,16 +107,22 @@ class BlogDeleteView(DeleteView):
     model = Blog
     success_url = reverse_lazy('catalog:blog_list')
 
-def publishing_action(request, slug):
-    blog_item = get_object_or_404(Blog, slug=slug)
-    if blog_item.is_published:
-        blog_item.is_published = False
-    else:
-        blog_item.is_published = True
+# def publishing_action(slug):
+#     blog_item = get_object_or_404(Blog, slug=slug)
+#     if blog_item.is_published:
+#         blog_item.is_published = False
+#     else:
+#         blog_item.is_published = True
+#
+#         blog_item.save()
+#
+#         return redirect(reverse_lazy('catalog:blog_list'))
 
-        blog_item.save()
-
-        return redirect(reverse('catalog:blog_list'))
+    # def is_published_filter(request):
+    #     context = {
+    #         'object_list': Blog.objects.filter(is_published=True),
+    #     }
+    #     return render(request, 'blog/blog_list.html', context)
 
     # if request.method == 'POST':
     #     blog.is_published = not blog.is_published
