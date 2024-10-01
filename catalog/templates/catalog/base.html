@@ -23,7 +23,7 @@
   <body>
 
     <header>
-      {% include "includes/inc_menu.html" %}
+      {% include "catalog/includes/inc_menu.html" %}
     </header>
 
     <main role="main">
@@ -35,6 +35,7 @@
           <p>
             <a href="#" class="btn btn-primary my-2">Выбрать товары</a>
             <a href="#" class="btn btn-secondary my-2">Корзина</a>
+            <a class="btn btn-primary" href="{% url 'catalog:product_create' %}" role="button">Создать продукт</a>
           </p>
         </div>
       </section>

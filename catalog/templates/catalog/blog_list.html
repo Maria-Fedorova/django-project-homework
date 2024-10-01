@@ -1,0 +1,39 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="btn-group">
+    <a href="{% url 'catalog:blog_create' %}"
+       class="btn btn-sm btn-outline-secondary">Создать</a>
+</div>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for object in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{ object.photo | media_filter }}">
+                    <div class="card-body">
+                        <p class="card-text">{{ object.title }}</p>
+                        <p class="card-text">{{ object.description | truncatechars:100 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                    <a class="btn btn-primary" href="{% url 'catalog:blog_detail' object.slug %}" role="button">Подробнее</a>
+                                    <a class="btn btn-primary" href="{% url 'catalog:blog_update' object.slug %}" role="button">Изменить</a>
+                                    <a class="btn btn-primary" href="{% url 'catalog:blog_delete' object.slug %}" role="button">Удалить</a>
+                            </div>
+                            {% if object.is_published %}
+                            <a class="btn btn-primary" href="{% url 'catalog:publishing_action' object.slug %}" role="button">Снять с публикации</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
