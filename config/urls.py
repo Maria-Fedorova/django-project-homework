@@ -22,10 +22,10 @@ from django.conf.urls.static import static
 from config import settings
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", include("catalog.urls", namespace="catalog")),
-    path("contacts", include("catalog.urls")),
-    # path('', include('catalog.urls'), namespace='catalog')
-]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  path("admin/", admin.site.urls),
+                  path("", include("catalog.urls", namespace="catalog")),
+                  path("contacts", include("catalog.urls")),
+                  # path('', include('catalog.urls'), namespace='catalog')
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
