@@ -59,3 +59,27 @@ class Blog(models.Model):
     class Meta:
         verbose_name = 'статья'
         verbose_name_plural = 'статьи'
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, related_name="version", on_delete=models.SET_NULL, null=True, blank=True,
+                                verbose_name="продукт")
+    numb = models.PositiveIntegerField(default=0, verbose_name="номер версии")
+    name = models.CharField(max_length=250, verbose_name="название версии")
+    is_actual = models.BooleanField(default=True, verbose_name='Текущая версия')
+
+    def __str__(self):
+        return f'{self.numb} {self.name}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'
+        ordering = ["product", "numb", "name", "is_actual"]
+
+    def save(self, *args, **kwargs):
+        if not self.numb:
+            max_version = Version.objects.filter(product=self.product).aggregate(models.Max('numb'))[
+                'numb__max']
+            self.version_number = (max_version + 1) if max_version is not None else 1
+        if self.is_actual:
+            Version.objects.filter(product=self.product, is_actual=True).update(is_actual=False)
+        super().save(*args, **kwargs)
