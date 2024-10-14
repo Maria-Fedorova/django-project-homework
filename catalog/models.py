@@ -44,6 +44,7 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
 
+
 class Blog(models.Model):
     title = models.CharField(max_length=150, verbose_name='название статьи')
     slug = models.CharField(max_length=150, **NULLABLE, verbose_name='URL')
@@ -59,6 +60,7 @@ class Blog(models.Model):
     class Meta:
         verbose_name = 'статья'
         verbose_name_plural = 'статьи'
+
 
 class Version(models.Model):
     product = models.ForeignKey(Product, related_name="version", on_delete=models.SET_NULL, null=True, blank=True,
