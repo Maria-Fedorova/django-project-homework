@@ -1,5 +1,6 @@
 from django.contrib import admin
 from catalog.models import Product, Category, Blog, Version
+from users.models import User
 
 
 @admin.register(Product)
@@ -25,3 +26,8 @@ class AdminBlog(admin.ModelAdmin):
 class AdminVersion(admin.ModelAdmin):
     list_display = ("product", "numb", 'name', 'is_actual')
     ist_filter = ('product',)
+
+@admin.register(User)
+class AdminVersion(admin.ModelAdmin):
+    list_display = ("username", "email", 'phone', 'country')
+    ist_filter = ('email',)
