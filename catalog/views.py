@@ -17,7 +17,7 @@ class ProductListView(ListView):
     model = Product
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
     def get_object(self, queryset=None):
@@ -50,7 +50,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     # fields = ["name", "description", "category", "photo", "price"]
     form_class = ProductForm
@@ -76,12 +76,16 @@ class ProductUpdateView(UpdateView):
             self.object = form.save()
             formset.instance = self.object
             formset.save()
+            product = form.save()
+            user = self.request.user
+            product.owner = user
+            product.save()
             return super.form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:product_list")
 
