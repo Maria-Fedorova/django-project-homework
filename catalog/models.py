@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -28,10 +30,15 @@ class Product(models.Model):
         verbose_name="категория",
     )
     price = models.PositiveIntegerField(verbose_name="цена за товар")
-    views_counter = models.PositiveIntegerField(default=0, verbose_name="количество просмотров", help_text="Укажите количество просмотров продукта")
+    views_counter = models.PositiveIntegerField(default=0, verbose_name="количество просмотров",
+                                                help_text="Укажите количество просмотров продукта")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, verbose_name="Дата изменения")
     slug = models.CharField(max_length=150, **NULLABLE, verbose_name="URL")
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='products', verbose_name="Владелец",
+                              help_text="Пользователь, создавший продукт", null=True, blank=True)
+
+    is_published = models.BooleanField(verbose_name="Опубликовано", default=False)
 
     def __str__(self):
         return (
@@ -43,6 +50,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
+        permissions = [
+            ("can_edit_is_published", "Can edit publication"),
+            ("edit_description", "Сan edit description"),
+            ("edit_category", "Сan edit category"),
+        ]
 
 
 class Blog(models.Model):
@@ -63,8 +75,10 @@ class Blog(models.Model):
 
 
 class Version(models.Model):
-    product = models.ForeignKey(Product, related_name="version", on_delete=models.SET_NULL, null=True, blank=True,
-                                verbose_name="продукт")
+    # product = models.ForeignKey(Product, related_name="version", on_delete=models.SET_NULL, null=True, blank=True,
+    product = models.ForeignKey(Product, related_name="продукт", on_delete=models.SET_NULL, null=True, blank=True,
+                                # verbose_name="продукт")
+                                verbose_name="version")
     numb = models.PositiveIntegerField(default=0, verbose_name="номер версии")
     name = models.CharField(max_length=250, verbose_name="название версии")
     is_actual = models.BooleanField(default=True, verbose_name='Текущая версия')
