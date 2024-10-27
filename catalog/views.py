@@ -1,12 +1,23 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Blog, Version
 
+
+# Create your views here.
+
+
+# def home(request):
+#     return render(request, "home.html")
+
+
+# def contacts(request):
+#     return render(request, "contacts.html")
 
 class ContactsView(TemplateView):
     """Контроллер просмотра контактов"""
@@ -70,19 +81,24 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return context_data
 
     def form_valid(self, form):
-        formset = self.get_context_data()['formset']
-        self.object = form.save()
-        if form.is_valid() and formset.is_valid():
-            self.object = form.save()
-            formset.instance = self.object
-            formset.save()
-            product = form.save()
-            user = self.request.user
-            product.owner = user
-            product.save()
-            return super.form_valid(form)
-        else:
-            return self.render_to_response(self.get_context_data(form=form, formset=formset))
+            context_data = self.get_context_data()
+            formset = context_data["formset"]
+            if form.is_valid() and formset.is_valid():
+                self.object = form.save()
+                formset.instance = self.object
+                formset.save()
+                return super().form_valid(form)
+            else:
+                return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm('catalog.edit_category') and user.has_perm('catalog.edit_description') and user.has_perm(
+                'catalog.can_edit_is_published'):
+            return ProductModeratorForm
+        raise PermissionDenied()
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
