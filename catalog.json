@@ -45,7 +45,7 @@
     "fields": {
       "name": "Молоко",
       "description": "Из-под коровки",
-      "photo": "",
+      "photo": "C:\\Users\\Alexandr\\PycharmProjects\\django-project-homework_exp\\media\\products_photo\\2024\\08\\20\\1.jpg",
       "category": 1,
       "price": 100,
       "created_at": "2024-08-16",
@@ -59,7 +59,7 @@
     "fields": {
       "name": "Сыворотка",
       "description": "Тоже молочка",
-      "photo": "",
+      "photo":  "products_photo\\2024\\08\\20\\2.jpg",
       "category": 1,
       "price": 200,
       "created_at": "2024-08-16",
@@ -73,7 +73,7 @@
     "fields": {
       "name": "Ряженка",
       "description": "Тоже молочка",
-      "photo": "",
+      "photo":  "C:\\Users\\Alexandr\\PycharmProjects\\django-project-homework_exp\\media\\products_photo\\2024\\08\\20\\5.jpeg",
       "category": 1,
       "price": 300,
       "created_at": "2024-08-16",
@@ -87,7 +87,7 @@
     "fields": {
       "name": "Яблоко",
       "description": "Ф",
-      "photo": "",
+      "photo":  "C:\\Users\\Alexandr\\PycharmProjects\\django-project-homework_exp\\media\\products_photo\\2024\\08\\20\\3.jpg",
       "category": 2,
       "price": 20,
       "created_at": "2024-08-16",
@@ -101,7 +101,7 @@
     "fields": {
       "name": "Груша",
       "description": "тоже фрукт",
-      "photo": "",
+      "photo":  "C:\\Users\\Alexandr\\PycharmProjects\\django-project-homework_exp\\media\\products_photo\\2024\\08\\20\\4.jpg",
       "category": 2,
       "price": 400,
       "created_at": "2024-08-16",
