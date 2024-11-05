@@ -18,6 +18,8 @@ from catalog.models import Product, Blog, Version
 
 # def contacts(request):
 #     return render(request, "contacts.html")
+from catalog.services import get_categories_from_cache
+
 
 class ContactsView(TemplateView):
     """Контроллер просмотра контактов"""
@@ -26,6 +28,9 @@ class ContactsView(TemplateView):
 
 class ProductListView(ListView):
     model = Product
+
+    def get_queryset(self):
+        return get_categories_from_cache()
 
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
@@ -81,15 +86,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         return context_data
 
     def form_valid(self, form):
-            context_data = self.get_context_data()
-            formset = context_data["formset"]
-            if form.is_valid() and formset.is_valid():
-                self.object = form.save()
-                formset.instance = self.object
-                formset.save()
-                return super().form_valid(form)
-            else:
-                return self.render_to_response(self.get_context_data(form=form, formset=formset))
+        context_data = self.get_context_data()
+        formset = context_data["formset"]
+        if form.is_valid() and formset.is_valid():
+            self.object = form.save()
+            formset.instance = self.object
+            formset.save()
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def get_form_class(self):
         user = self.request.user
